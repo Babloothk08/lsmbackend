@@ -3,12 +3,20 @@ import nodemailer from "nodemailer";
 export const sendEmail = async ({ to, subject, html }) => {
   try {
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: process.env.SMTP_HOST, 
+      port: process.env.SMTP_PORT, 
+      secure: false, 
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
+      tls: {
+        rejectUnauthorized: false, 
+      },
     });
+
+    await transporter.verify();
+    console.log(" SMTP Server Ready");
 
     await transporter.sendMail({
       from: `"Lead Management System" <${process.env.EMAIL_USER}>`,
@@ -16,7 +24,9 @@ export const sendEmail = async ({ to, subject, html }) => {
       subject,
       html,
     });
+
+    console.log("📧 Email sent successfully");
   } catch (error) {
-    console.error("Email send error:", error.message);
+    console.error(" Email send error:", error.message);
   }
 };

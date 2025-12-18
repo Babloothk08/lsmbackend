@@ -46,7 +46,7 @@ const addGoogleLeads = asyncHandler(async (req, res) => {
 });
 
 const getGoogleLeads = asyncHandler(async (req, res) => {
-  const googleLeadsList = await Google.find({});
+  const googleLeadsList = await Google.find({}).sort({ createdAt: -1 });
   if (!googleLeadsList) {
     throw new ApiError(404, " Google Lead not found");
   }

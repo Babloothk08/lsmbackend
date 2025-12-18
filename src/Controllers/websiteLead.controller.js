@@ -43,7 +43,7 @@ const createWebsiteLead = asyncHandler(async (req, res) => {
 });
 
 const getWebsiteLead = asyncHandler(async (req, res) => {
-  const leadList = await Website.find();
+  const leadList = await Website.find().sort({ createdAt: -1 });
   if (!leadList) {
     throw new ApiError(404, " Website lead is Empaty");
   }

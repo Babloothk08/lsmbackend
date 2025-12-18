@@ -77,7 +77,7 @@ const addMetaLeads = asyncHandler(async (req, res) => {
 });
 
 const getMetaLeads = asyncHandler(async (req, res) => {
-  const metaLeadsList = await Meta.find({});
+  const metaLeadsList = await Meta.find({}).sort({ createdAt: -1 });
   if (!metaLeadsList) {
     throw new ApiError(404, " Meta Lead not found");
   }
